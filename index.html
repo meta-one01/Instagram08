@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Awareness Training - Phishing Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Warning Banner */
+        .warning-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ff4444;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 60px;
+        }
+
+        .login-box {
+            background: white;
+            border: 1px solid #dbdbdb;
+            padding: 40px;
+            width: 350px;
+            text-align: center;
+        }
+
+        .logo {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 48px;
+            margin-bottom: 30px;
+            color: #262626;
+        }
+
+        .input-group {
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background: #fafafa;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #a8a8a8;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #0095f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .login-btn:hover {
+            background: #0077c2;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #8e8e8e;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #dbdbdb;
+            margin: 0 10px;
+        }
+
+        .facebook-login {
+            color: #385185;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .forgot-password {
+            color: #00376b;
+            font-size: 12px;
+            text-decoration: none;
+            margin-top: 15px;
+            display: block;
+        }
+
+        .signup-box {
+            background: white;
+            border: 1px solid #dbdbdb;
+            padding: 25px;
+            width: 350px;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .signup-box a {
+            color: #0095f6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .get-app {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .get-app p {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .store-btn {
+            height: 40px;
+        }
+
+        /* Educational Notice */
+        .edu-notice {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px 25px;
+            border-radius: 8px;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .edu-notice h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .edu-notice p {
+            color: #856404;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- SECURITY WARNING BANNER -->
+    <div class="warning-banner">
+        ⚠️ SECURITY AWARENESS TRAINING - THIS IS A SIMULATION ⚠️
+    </div>
+
+    <div class="container">
+        <div class="login-box">
+            <div class="logo">Instagram</div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Phone number, username, or email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Log In</button>
+            </form>
+
+            <div class="divider">OR</div>
+
+            <a href="#" class="facebook-login">
+                <span>📘</span> Log in with Facebook
+            </a>
+
+            <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+
+        <div class="signup-box">
+            Don't have an account? <a href="#">Sign up</a>
+        </div>
+
+        <div class="get-app">
+            <p>Get the app.</p>
+            <div class="store-buttons">
+                <div class="store-btn" style="background: #000; color: white; padding: 8px 15px; border-radius: 5px; font-size: 12px;">
+                    GET IT ON<br><strong>Google Play</strong>
+                </div>
+                <div class="store-btn" style="background: #000; color: white; padding: 8px 15px; border-radius: 5px; font-size: 12px;">
+                    Download on the<br><strong>App Store</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Educational Notice -->
+    <div class="edu-notice">
+        <h3>🎓 Learning Moment</h3>
+        <p>This page demonstrates how phishing sites mimic real login pages. 
+        In a real attack, your credentials would be stolen. Always check the URL 
+        before entering passwords!</p>
+    </div>
+
+    <script>
+        // EDUCATIONAL DEMONSTRATION ONLY
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Show educational message instead of actually stealing credentials
+            alert(`🎓 AWARENESS TRAINING:\n\nIn a real phishing attack, this is what would be stolen:\n• Username: ${username}\n• Password: ${password.substring(0, 2)}${'*'.repeat(password.length - 2)}\n\nNEVER enter real credentials on suspicious sites!\n\nRedirecting to safety training...`);
+            
+            // Redirect to actual educational content
+            window.location.href = 'https://www.cisa.gov/secure-our-world/recognize-and-report-phishing';
+        });
+    </script>
+</body>
+          </html>
